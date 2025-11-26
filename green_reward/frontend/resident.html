@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenReward - Resident Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <!-- Nav -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-green-400 to-green-600 shadow-md"></div>
+                <h1 class="font-bold text-2xl tracking-tight text-gray-900">GreenReward</h1>
+            </div>
+
+            <div class="hidden md:flex gap-8 text-sm font-medium text-gray-500">
+                <a href="#" class="text-green-600 font-bold">Dashboard</a>
+                <button onclick="toggleHowItWorks()" class="hover:text-green-600 transition">How it Works</button>
+                <a href="#marketplace" class="hover:text-green-600 transition">Marketplace</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <div class="text-sm font-bold text-gray-800">Ravi Kumar</div>
+                    <div class="text-xs text-gray-500">Resident • Flat 302</div>
+                </div>
+                
+                <!-- Explicit Logout Button for easier access -->
+                <button onclick="logout()" class="bg-gray-100 hover:bg-red-50 text-gray-600 hover:text-red-600 p-2 rounded-lg transition" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+                
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ravi" class="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 cursor-pointer">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- LEFT COLUMN -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Hero -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-green-50 rounded-full -mr-16 -mt-16 z-0"></div>
+                    <div class="relative z-10 max-w-lg">
+                        <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Impact Leader</span>
+                        <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Turn Waste Into Rewards</h2>
+                        <p class="text-gray-500 mb-6">Drop off segregated waste at partner points or scan at your doorstep to earn eco-points instantly.</p>
+                        <div class="flex gap-3">
+                            <button onclick="toggleHowItWorks()" class="bg-green-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition shadow-lg shadow-green-200">
+                                <i class="fas fa-play-circle mr-2"></i>How it works
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketplace -->
+                <div id="marketplace">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">Rewards Marketplace</h3>
+                        <div class="flex gap-2">
+                            <span class="bg-green-600 text-white text-xs px-3 py-1 rounded-full cursor-pointer">All</span>
+                            <span class="bg-white border text-gray-600 text-xs px-3 py-1 rounded-full cursor-pointer hover:border-green-500">Groceries</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 text-xl group-hover:scale-110 transition"><i class="fas fa-shopping-basket"></i></div>
+                                <span class="bg-orange-50 text-orange-600 text-xs font-bold px-2 py-1 rounded">20% OFF</span>
+                            </div>
+                            <h4 class="font-bold text-lg text-gray-900">FreshBasket Supermart</h4>
+                            <div class="flex justify-between items-center border-t pt-4 mt-2">
+                                <span class="font-bold text-green-700">1000 pts</span>
+                                <button onclick="redeemPoints('FreshBasket', 1000)" class="bg-gray-900 text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-green-600 transition">Redeem</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600 text-xl group-hover:scale-110 transition"><i class="fas fa-mug-hot"></i></div>
+                                <span class="bg-yellow-50 text-yellow-600 text-xs font-bold px-2 py-1 rounded">Free Chai</span>
+                            </div>
+                            <h4 class="font-bold text-lg text-gray-900">Chai Adda Corner</h4>
+                            <div class="flex justify-between items-center border-t pt-4 mt-2">
+                                <span class="font-bold text-green-700">150 pts</span>
+                                <button onclick="redeemPoints('Chai Adda', 150)" class="bg-gray-900 text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-green-600 transition">Redeem</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Balance -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg shadow-gray-100 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-50 rounded-full -mr-10 -mt-10"></div>
+                    <div class="relative">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-500 text-sm font-bold">Total Balance</span>
+                            <i class="fas fa-wallet text-gray-300"></i>
+                        </div>
+                        <div class="flex items-baseline gap-2 mb-6">
+                            <h2 class="text-5xl font-black text-gray-800 tracking-tight" id="points-display">...</h2>
+                            <span class="text-lg font-bold text-green-600">pts</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                <div class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Saved</div>
+                                <div class="font-bold text-gray-800 text-lg">86.4 <span class="text-xs font-normal">kg</span></div>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-xl border border-gray-100">
+                                <div class="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Rank</div>
+                                <div class="font-bold text-gray-800 text-lg">Top 12%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-gray-800 mb-6">Recent Activity</h3>
+                    <div id="activity-list" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- How It Works Modal -->
+    <div id="how-it-works-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-3xl p-8 max-w-2xl w-full mx-4 shadow-2xl relative animate-fade-in">
+            <button onclick="toggleHowItWorks()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fas fa-times"></i></button>
+            
+            <div class="text-center mb-8">
+                <div class="inline-block bg-green-100 text-green-600 px-4 py-1 rounded-full text-sm font-bold mb-4">Simple Process</div>
+                <h2 class="text-3xl font-extrabold">How GreenReward Works</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="p-6 bg-green-50 rounded-2xl border border-green-100">
+                    <div class="w-14 h-14 bg-white text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-sm"><i class="fas fa-trash-alt"></i></div>
+                    <h3 class="font-bold mb-2">1. Segregate</h3>
+                    <p class="text-sm text-gray-500">Separate your waste into Dry (Blue) and Wet (Green) bins.</p>
+                </div>
+                <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                    <div class="w-14 h-14 bg-white text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-sm"><i class="fas fa-camera"></i></div>
+                    <h3 class="font-bold mb-2">2. Scan</h3>
+                    <p class="text-sm text-gray-500">Our collector scans your waste at the doorstep using AI.</p>
+                </div>
+                <div class="p-6 bg-yellow-50 rounded-2xl border border-yellow-100">
+                    <div class="w-14 h-14 bg-white text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-sm"><i class="fas fa-coins"></i></div>
+                    <h3 class="font-bold mb-2">3. Earn</h3>
+                    <p class="text-sm text-gray-500">Points are added instantly. Redeem them at local shops.</p>
+                </div>
+            </div>
+            
+            <button onclick="toggleHowItWorks()" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl mt-8 hover:bg-black transition transform hover:-translate-y-1">Got it, Let's Recycle!</button>
+        </div>
+    </div>
+    
+    <!-- IMPORTANT: 'v=final' Forces Browser to load new Script -->
+    <script src="script.js?v=final"></script>
+</body>
+</html>
